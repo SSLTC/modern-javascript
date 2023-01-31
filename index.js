@@ -5,54 +5,57 @@ import { removeAllChildren } from "../modules/rmAllChildElem.js";
 // Event will start on a keyup action
 const searchBar = document.querySelector('#searchBar');
 searchBar.addEventListener('keyup', async (event) => {
-    // checking the action for specific key (Enter)
+
     if(event.key === "Enter") {
         // Store target in variable
         const thisCity = event.target.value.toLowerCase();
         event.target.value = '';
-        // Fetching first api to get the City coordinates
-        const geoData = await fetchData(`http://api.openweathermap.org/geo/1.0/direct?q=${thisCity}&appid=${Data.key}`);
-
-        if (geoData.length === 0) {
-            // If there are errors, send out an error message
-            console.error('Error:', "not a place!");
-
-            removeAllChildren("container");
-            
-            alert("Are you sure you aren't holding your map upside down?");
-        } else {
-            const cityNameContainer = document.querySelector('.city-name');
-            cityNameContainer.innerHTML = geoData[0].name;
-
-            // Fetching data according to the coordinates     
-            let onecallData = await fetchData(`https://api.openweathermap.org/data/3.0/onecall?lat=${geoData[0].lat}&lon=${geoData[0].lon}&cnt=5&units=metric&exclude=minutely,hourly,alerts&appid=${Data.key}`);
-            if(onecallData.cod === '200') {
-                // Show the data
-                showWeatherData(onecallData);
-            }
-        }
+        
+        fetchWeatherData();
     };
 });
+
+const fetchWeatherData = async () => {
+    // Fetching first api to get the City coordinates
+    const geoData = await fetchData(`http://api.openweathermap.org/geo/1.0/direct?q=${thisCity}&appid=${Data.key}`);
+
+    if (geoData.length === 0) {
+        // If there are errors, send out an error message
+        console.error('Error:', "not a place!");
+
+        removeAllChildren("container");
+        
+        alert("Are you sure you aren't holding your map upside down?");
+    } else {
+        const cityNameContainer = document.querySelector('.city-name');
+        cityNameContainer.innerHTML = geoData[0].name;
+
+        // Fetching data according to the coordinates     
+        let onecallData = await fetchData(`https://api.openweathermap.org/data/3.0/onecall?lat=${geoData[0].lat}&lon=${geoData[0].lon}&cnt=5&units=metric&exclude=minutely,hourly,alerts&appid=${Data.key}`);
+        if(onecallData.cod === '200') {
+            showWeatherData(onecallData);
+        }
+    }
+}
 
 const showWeatherData = (onecallData) => {
 
     console.log('Welcome to this basic weather app. this is not a product but the product of an academic exercise.')
 
-    // Removing all child elements from Container before creating new set of elements
     removeAllChildren("container");
 
     // Looping through 5 days of weather data
     for(let i = 0; i < 5; i++) {
-        createMap();
+        createMap(onecallData, i);
     };
 }
 
-const createMap = () => {
+const createMap = (onecallData, index) => {
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     // Use the remainder operator (%) to switch from saturday (last in array) back to sunday (first in array)
     const date = new Date();
-    let dayOfTheWeek = weekdays[(date.getDay() + i) % 7];
-    const data = onecallData.daily[i];
+    let dayOfTheWeek = weekdays[(date.getDay() + index) % 7];
+    const data = onecallData.daily[index];
 
     // Create the elements with Data
     const card = document.createElement('div');
