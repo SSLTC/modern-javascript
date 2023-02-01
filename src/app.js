@@ -1,5 +1,6 @@
-import Data from "./config.js";
-import fetchData from "./modules/fetchData.js";
+//import Data from "../config.js";
+import "./style.css";
+import fetchData from "../modules/fetchData.js";
 import { removeAllChildren } from "../modules/rmAllChildElem.js";
 
 // Event will start on a keyup action
@@ -11,11 +12,11 @@ searchBar.addEventListener('keyup', async (event) => {
         const thisCity = event.target.value.toLowerCase();
         event.target.value = '';
         
-        fetchWeatherData();
+        fetchWeatherData(thisCity);
     };
 });
 
-const fetchWeatherData = async () => {
+const fetchWeatherData = async (thisCity) => {
     // Fetching first api to get the City coordinates
     const geoData = await fetchData(`http://api.openweathermap.org/geo/1.0/direct?q=${thisCity}&appid=${Data.key}`);
 
