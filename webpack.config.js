@@ -30,14 +30,14 @@ module.exports = {
       },
     devServer: {
       static: {
-        directory: path.resolve(__dirname, './deploy')
+        directory: path.resolve(__dirname, 'deploy')
       },
       open: true,
     },
   plugins: [
     new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: './index.html',
+        template: './src/index.html',
     }),
     new CleanWebpackPlugin()
   ],

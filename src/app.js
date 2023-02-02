@@ -1,7 +1,8 @@
-//import Data from "../config.js";
+import Data from "../config.js";
 import "./style.css";
 import fetchData from "../modules/fetchData.js";
 import { removeAllChildren } from "../modules/rmAllChildElem.js";
+import { DateTime } from "luxon";
 
 // Event will start on a keyup action
 const searchBar = document.querySelector('#searchBar');
@@ -52,10 +53,12 @@ const showWeatherData = (onecallData) => {
 }
 
 const createMap = (onecallData, index) => {
-    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    // const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     // Use the remainder operator (%) to switch from saturday (last in array) back to sunday (first in array)
-    const date = new Date();
-    let dayOfTheWeek = weekdays[(date.getDay() + index) % 7];
+    // const date = new Date();
+    // let dayOfTheWeek = weekdays[(date.getDay() + index) % 7];
+    let dayOfTheWeek = DateTime.local().plus({days:`${index}`}).weekdayLong;
+
     const data = onecallData.daily[index];
 
     // Create the elements with Data
