@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -28,13 +29,16 @@ module.exports = {
         ]
       },
     devServer: {
-        contentBase: './deploy',
-        open: true
+      static: {
+        directory: path.resolve(__dirname, './deploy')
+      },
+      open: true,
     },
   plugins: [
     new HtmlWebpackPlugin({
         filename: 'index.html',
         template: './index.html',
     }),
+    new CleanWebpackPlugin()
   ],
 };
