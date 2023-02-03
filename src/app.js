@@ -14,7 +14,7 @@ searchBar.addEventListener('keyup', async (event) => {
         event.target.value = '';
         
         fetchWeatherData(thisCity);
-    };
+    }
 });
 
 const fetchWeatherData = async (thisCity) => {
@@ -38,19 +38,19 @@ const fetchWeatherData = async (thisCity) => {
             showWeatherData(onecallData);
         }
     }
-}
+};
 
 const showWeatherData = (onecallData) => {
 
-    console.log('Welcome to this basic weather app. this is not a product but the product of an academic exercise.')
+    console.log('Welcome to this basic weather app. this is not a product but the product of an academic exercise.');
 
     removeAllChildren("container");
 
     // Looping through 5 days of weather data
     for(let i = 0; i < 5; i++) {
         createMap(onecallData, i);
-    };
-}
+    }
+};
 
 const createMap = (onecallData, index) => {
     // const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -64,6 +64,8 @@ const createMap = (onecallData, index) => {
     // Create the elements with Data
     const card = document.createElement('div');
     card.classList.add("card");
+
+    const container = document.querySelector(".container");
     container.appendChild(card);
 
     const imageBox = document.createElement('div');
@@ -91,7 +93,7 @@ const createMap = (onecallData, index) => {
     contentBox.appendChild(currentTempBox);
 
     const currentTempHeader = document.createElement("h3");
-    currentTempHeader.innerHTML = "Temp:"
+    currentTempHeader.innerHTML = "Temp:";
     currentTempBox.appendChild(currentTempHeader);
 
     const currentTemp = document.createElement("span");
@@ -104,16 +106,16 @@ const createMap = (onecallData, index) => {
     contentBox.appendChild(minMaxTemperatures);
 
     const minMaxTempHeader = document.createElement("h3");
-    minMaxTempHeader.innerHTML = "More:"
+    minMaxTempHeader.innerHTML = "More:";
     minMaxTemperatures.appendChild(minMaxTempHeader);
 
     const minTemp = document.createElement("span");
-    minTemp.classList.add("min-temp")
+    minTemp.classList.add("min-temp");
     minTemp.innerHTML = data.temp.min + "°C";
     minMaxTemperatures.appendChild(minTemp);
 
     const maxTemp = document.createElement("span");
-    maxTemp.classList.add("max-temp")
+    maxTemp.classList.add("max-temp");
     maxTemp.innerHTML = data.temp.max + "°C";
     minMaxTemperatures.appendChild(maxTemp);
-}
+};
