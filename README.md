@@ -1,9 +1,5 @@
-# verou-4-modern-javascript-SSLTC
-
 ## The Weather Application
 
-- Users can see the weather in the city they choose for the next five days
+- Users can see the weather in the selected city
 
-<a href="./">the-modern-javascript Link</a>
-
-___
+<a href="./dist/">the-modern-javascript Link</a>
